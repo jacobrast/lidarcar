@@ -1,0 +1,43 @@
+.\main.o: main.c
+.\main.o: setup.h
+.\main.o: cli.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f746xx.h
+.\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta4\CMSIS\Include\core_cm7.h
+.\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta4\CMSIS\Include\core_cminstr.h
+.\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta4\CMSIS\Include\cmsis_armcc.h
+.\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta4\CMSIS\Include\core_cmfunc.h
+.\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta4\CMSIS\Include\core_cmsimd.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include\system_stm32f7xx.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.2.0\Board\Board_GLCD.h
+.\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\MDK\Boards\ST\STM32F746G_Discovery\Common\GLCD_Config.h
+.\main.o: C:\Users\Jacob\Desktop\Bluetooth test0.7\RTE\Device\STM32F746NGHx\RTE_Device.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal.h
+.\main.o: C:\Users\Jacob\Desktop\Bluetooth test0.7\RTE\Device\STM32F746NGHx\stm32f7xx_hal_conf.h
+.\main.o: C:\Users\Jacob\Desktop\Bluetooth test0.7\RTE\RTE_Components.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_rcc.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_def.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\Legacy/stm32_hal_legacy.h
+.\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_rcc_ex.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_gpio.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_gpio_ex.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dma.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dma_ex.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_cortex.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_flash.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_flash_ex.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_sdram.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_fmc.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_ltdc.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_pwr.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_pwr_ex.h
+.\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta4\CMSIS\Driver\Include\Driver_USART.h
+.\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta4\CMSIS\Driver\Include\Driver_Common.h
+.\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F7xx_DFP\2.7.0\Drivers\BSP\STM32746G-Discovery\stm32746g_discovery_sdram.h
+.\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
