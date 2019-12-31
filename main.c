@@ -49,9 +49,14 @@ int main(void)
     //RCC->DCKCFGR1 |= (1<<24); //double timer speed to 216
 	
 	while(Driver_USART7.GetStatus().tx_busy==1);
-    //Driver_USART7.Send("AT+NAMELidar5",13); //(sizeof("AT+NAMELidar2")-1)/sizeof(char));
-    //Driver_USART7.Send("AT+BAUD8",8);//sizeof("AT+BAUD8")/sizeof(char));
-    //Driver_USART7.Send("AT+RESET",sizeof("AT+RESET"));
+
+    // Initalize BluTooth
+    if(0){
+        Driver_USART7.Send("AT+NAMELidar5",13); //(sizeof("AT+NAMELidar2")-1)/sizeof(char));
+        Driver_USART7.Send("AT+BAUD8",8);//sizeof("AT+BAUD8")/sizeof(char));
+        Driver_USART7.Send("AT+RESET",sizeof("AT+RESET"));
+    }
+
     
     //Interupt configuration
 	RCC->APB2ENR |=(1<<14); //enable the SYSCFG peripheral for connecting GPIO to interupt lines
@@ -59,8 +64,8 @@ int main(void)
 	EXTI->IMR |=(1<<10); //Demasking the input input request on line 10
 	EXTI->RTSR |=(1<<10); //Enable rising edge trigger for line 10
     EXTI->FTSR |=(1<<10); //Enable falling edge trigger for line 10
-		//Activate NVIC
-        //change for motor count to 
+	//Activate NVIC
+    //change for motor count to 
 	NVIC_SetPriority(EXTI15_10_IRQn,2);
 	NVIC_EnableIRQ(EXTI15_10_IRQn);
     
@@ -77,28 +82,6 @@ int main(void)
 		rc = parse_command(&cmd);
 	}	
 }
-/*
-void TIM5_IRQHandler(void){
-	dist++;
-    GLCD_DrawString(0,125,"Timer Count:");
-    print_num(200,125,dist);
-    if(dist == match){
-        if(going_forward == 1)
-        {
-                GLCD_DrawString(150,150,"OFF");
-                TIM12->CCR2 = 0;
-                going_forward = 0;
-        }
-        GLCD_DrawString(0,100,"Count done:");
-        print_num(200,100,dist);
-        dist =0;
-        match = 0;
-        TIM5->CR1 &= ~(1<<0); //stop timer 5
-        
-    }
-    TIM5->SR &=~(1<<1); 		//clear the flag
-}
-*/
 
 void EXTI15_10_IRQHandler(void){
 	dist++;

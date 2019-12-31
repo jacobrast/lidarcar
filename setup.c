@@ -2,6 +2,7 @@
 #include "Board_GLCD.h"                 // ::Board Support:Graphic LCD
 #include "GLCD_Config.h"                // Keil.STM32756G-EVAL::Board Support:Graphic LCD
 #include "stm32f7xx_hal.h"              // Keil::Device:STM32Cube HAL:Common
+#include "setup.h"
 
 extern ARM_DRIVER_USART Driver_USART7;
 extern ARM_DRIVER_USART Driver_USART6;
@@ -19,11 +20,10 @@ void setup_device(void)
 												ARM_USART_DATA_BITS_8 |
 												ARM_USART_PARITY_NONE |
 												ARM_USART_STOP_BITS_1 |
-												ARM_USART_FLOW_CONTROL_NONE, 115200);  //9600 
+												ARM_USART_FLOW_CONTROL_NONE, 115200);
 	Driver_USART7.Control(ARM_USART_CONTROL_TX, 1);
 	Driver_USART7.Control(ARM_USART_CONTROL_RX, 1);
-    
-    
+
 	Driver_USART6.PowerControl(ARM_POWER_FULL);
 	Driver_USART6.Control(ARM_USART_MODE_ASYNCHRONOUS | 
 												ARM_USART_DATA_BITS_8 |
@@ -34,61 +34,54 @@ void setup_device(void)
 	Driver_USART6.Control(ARM_USART_CONTROL_RX, 1);
 	
 	GLCD_SetForegroundColor(GLCD_COLOR_BLACK);
-	//GLCD_SetBackgroundColor(GLCD_COLOR_BLUE);
 	GLCD_ClearScreen();
     
-    //GPIO Setup:
-	RCC->AHB1ENR |= (1<<1)|(1<<5)|(1<<8); //activates GPIOB GPIOI GPIOF
+  //GPIO Setup:
+  //activates GPIOB GPIOI GPIOF
+	RCC->AHB1ENR |= (1<<GPIOB_OFFSET)|(1<<GPIOF_OFFSET)|(1<<GPIOI_OFFSET); 
     
-    GPIOB->MODER |= (unsigned int)(2U<<30); //PB15 in AF mode
-    GPIOI->MODER |= (1<<0); //PI0 is an output
-    GPIOF->MODER |= (1<<18); //PF9 is an output
-    GPIOB->AFR[1] |= (unsigned int)(9U<<28); //PB15 in AF9 mode (TIM12_CH2)
+  GPIOB->MODER |= (unsigned int)(2U<<30); //PB15 in AF mode
+  GPIOI->MODER |= (1<<0); //PI0 is an output
+  GPIOF->MODER |= (1<<18); //PF9 is an output
+  GPIOB->AFR[1] |= (unsigned int)(9U<<28); //PB15 in AF9 mode (TIM12_CH2)
     
-    GPIOF->MODER |= (2<<16); //PF8 in AF mode
-    GPIOF->AFR[1] |= (9<<0); //PF8 in AF9 mode (TIM13_CH1)
+  GPIOF->MODER |= (2<<16); //PF8 in AF mode
+  GPIOF->AFR[1] |= (9<<0); //PF8 in AF9 mode (TIM13_CH1)
     
-    //ADC Setup: For reading the voltage on the pot to control the servo motors
+  //ADC Setup: For reading the voltage on the pot to control the servo motors
 	RCC->APB2ENR |= (1<<10); //activate ADC3
 	ADC3->SQR3 |= (8<<0); //first conversion on channel 8 (ADC3_IN8)
 	ADC3->CR2 |= (1<<0); //enable ADC3
     
-    //Timer Setup:
+  //Timer Setup:
 	//We will use TIM13_CH1 PF8 for steering
-    
-    RCC->APB1ENR |= (1<<7); //activates TIM13
-    TIM13->CCMR1 |= (6<<4); //TIM13_CH1 in PWM1 mode
-    TIM13->CCER |= (1<<0); //connects TIM13_CH1 to PB30 pin
-    
-    TIM13->PSC = 36; //prescaler
-    TIM13->ARR = 0; //defines PWM period
-    TIM13->CCR1 = 0; //defines duty cycle
-    TIM13->CR1 |= (1<<0); //starts counter
+  RCC->APB1ENR |= (1<<7); //activates TIM13
+  TIM13->CCMR1 |= (6<<4); //TIM13_CH1 in PWM1 mode
+  TIM13->CCER |= (1<<0); //connects TIM13_CH1 to PB30 pin  
+  TIM13->PSC = 36; //prescaler
+  TIM13->ARR = 0; //defines PWM period
+  TIM13->CCR1 = 0; //defines duty cycle
+  TIM13->CR1 |= (1<<0); //starts counter
     	
-    //For TIM12_CH2 PB15, wheel power
+  //For TIM12_CH2 PB15, wheel power
+  RCC->APB1ENR |= (1<<6); //activates TIM12
+  TIM12->CCMR1 |= (6<<12); //TIM12_CH2 in PWM1 mode
+  TIM12->CCER |= (1<<4); //connects TIM12_CH2 to PB30 pin
+  TIM12->PSC = 0; //prescaler
+  TIM12->ARR = 8639; //defines PWM period
+  TIM12->CCR2 = 0; //defines duty cycle
+  TIM12->CR1 |= (1<<0); //starts counter
 
-    RCC->APB1ENR |= (1<<6); //activates TIM12
-    TIM12->CCMR1 |= (6<<12); //TIM12_CH2 in PWM1 mode
-    TIM12->CCER |= (1<<4); //connects TIM12_CH2 to PB30 pin
-    
-    TIM12->PSC = 0; //prescaler
-    TIM12->ARR = 8639; //defines PWM period
-    TIM12->CCR2 = 0; //defines duty cycle
-    TIM12->CR1 |= (1<<0); //starts counter
-
-
-    //Timer interupt setup for drive funciton timing
-    RCC->APB1ENR |= (1<<3); //Enable timer 5
-    TIM5->DIER |= (1<<1); //enable interupts on capture channel 1
-    TIM5->CCMR1 |= (6<<4); //Put timer 5 in toggle mode
-    
-    TIM5->PSC = 60; 
+  //Timer interupt setup for drive funciton timing
+  RCC->APB1ENR |= (1<<3); //Enable timer 5
+  TIM5->DIER |= (1<<1); //enable interupts on capture channel 1
+  TIM5->CCMR1 |= (6<<4); //Put timer 5 in toggle mode  
+  TIM5->PSC = 60; 
 	TIM5->ARR = 36000; 
 	TIM5->CCR1 = 36000; 
     
-    //TIM5->CR1 |= (1<<0); //start timer 5
-   
-    NVIC_SetPriority(TIM5_IRQn,2); //set priority to 2(chosen arbitrarily) 
+  //TIM5->CR1 |= (1<<0); //start timer 5 
+  NVIC_SetPriority(TIM5_IRQn,2); //set priority to 2(chosen arbitrarily) 
 	NVIC_EnableIRQ(TIM5_IRQn);
 }
 
@@ -97,6 +90,8 @@ void SysTick_Handler (void)
     HAL_IncTick();
 }
 
+
+// Boilerplate code for overclocking CPU
 static void SystemClock_Config(void)
 {
   RCC_ClkInitTypeDef RCC_ClkInitStruct;
