@@ -1,3 +1,8 @@
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <stdio.h>
+ 
 #include "setup.h"
 #include "cli.h"
 #include "stm32f7xx.h"                  // Device header
@@ -7,26 +12,11 @@
 #include "stm32f7xx_hal.h"              // Keil::Device:STM32Cube HAL:Common
 #include "Driver_USART.h"               // ::CMSIS Driver:USART
 #include "stm32746g_discovery_sdram.h"  // Keil.STM32F746G-Discovery::Board Support:Drivers:SDRAM
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
- 
+
 
 extern ARM_DRIVER_USART Driver_USART6;
 extern ARM_DRIVER_USART Driver_USART7;
 extern GLCD_FONT GLCD_Font_16x24;
-extern int match;
-extern int going_forward;
-extern int set_wheels(int var);
-
-char CR = 10; //carriage return, enter
-char *new_line = &CR;
-int acc = 0;
-int UART7_sent = 0, UART6_sent = 0;
-char scan[3] = {0xA5, 0x20, 0};
-char stop[3] = {0xA5, 0x25, 0};
-int dist;
-
 extern void myUSART6_callback(uint32_t event);
 extern void myUSART7_callback(uint32_t event);
 

@@ -1,0 +1,8 @@
+HOMEDIR=datastructs
+DATA_DEPS=$(HOMEDIR)/include
+DATA_SRCS = $(wildcard $(HOMEDIR)/source/*.c)
+DATA_OBJ = $(patsubst %.c,%.o,$(DATA_SRCS))
+CFLAGS += -I$(DATA_DEPS)
+
+%.o: %.c $(DATA_DEPS)
+	$(CC) -c -o $(ODIR)/$(@F) $< $(CFLAGS)
