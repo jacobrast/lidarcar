@@ -6,11 +6,18 @@
 
 extern ARM_DRIVER_USART Driver_USART7;
 extern ARM_DRIVER_USART Driver_USART6;
+extern void myUSART6_callback(uint32_t event);
+extern void myUSART7_callback(uint32_t event);
 extern GLCD_FONT GLCD_Font_16x24;
 static void SystemClock_Config(void);
 
 void setup_device(void)
 {
+	dist = 0;
+
+	Driver_USART6.Initialize(myUSART6_callback);
+    Driver_USART7.Initialize(myUSART7_callback);
+
 	SystemClock_Config();
 	GLCD_Initialize();
 	GLCD_SetFont(&GLCD_Font_16x24);
@@ -83,6 +90,36 @@ void setup_device(void)
   //TIM5->CR1 |= (1<<0); //start timer 5 
   NVIC_SetPriority(TIM5_IRQn,2); //set priority to 2(chosen arbitrarily) 
 	NVIC_EnableIRQ(TIM5_IRQn);
+
+	while(Driver_USART7.GetStatus().tx_busy==1);
+
+    // Initalize BluTooth
+    if(0){
+        Driver_USART7.Send("AT+NAMELidar5",13); //(sizeof("AT+NAMELidar2")-1)/sizeof(char));
+        Driver_USART7.Send("AT+BAUD8",8);//sizeof("AT+BAUD8")/sizeof(char));
+        Driver_USART7.Send("AT+RESET",sizeof("AT+RESET"));
+    }
+
+    
+    //Interupt configuration
+	//enable the SYSCFG peripheral for connecting GPIO to interupt lines
+	RCC->APB2ENR |=(1<<14);
+    //Enable interupts on PF10
+    SYSCFG->EXTICR[2] |= (5<<8);
+	//Demasking the input input request on line 10
+	EXTI->IMR |=(1<<10);
+	//Enable rising edge trigger for line 10
+	EXTI->RTSR |=(1<<10);
+    //Enable falling edge trigger for line 10
+    EXTI->FTSR |=(1<<10); 
+	//Activate NVIC
+    //change for motor count to 
+	NVIC_SetPriority(EXTI15_10_IRQn,2);
+	NVIC_EnableIRQ(EXTI15_10_IRQn);
+
+	GPIOF->ODR |= (1<<9); //enable motor on PF9
+	
+	GLCD_DrawString(0,0,"Ready...");
 }
 
 void SysTick_Handler (void)
@@ -134,3 +171,24 @@ static void SystemClock_Config(void)
     while(1) { ; }
   }
 }
+
+
+void EXTI15_10_IRQHandler(void){
+	dist++;
+    print_num(200,175,dist);
+    if(dist >= match){
+        if(going_forward == 1)
+        {
+                GLCD_DrawString(150,150,"OFF");
+                TIM12->CCR2 = 0;
+                going_forward = 0;
+                dist = 0;
+        }
+        GLCD_DrawString(0,100,"Count done:");
+        print_num(200,100,dist);
+        match = 0;
+    }
+    EXTI->PR |=(1<<10); 		//clear the flag
+    
+}
+

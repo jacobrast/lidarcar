@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdint.h>
 #include "list.h"
-#include "stub.h"
 #include "cli.h"
 #include "command.h"
 

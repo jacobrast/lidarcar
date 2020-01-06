@@ -1,4 +1,3 @@
-#include "stub.h"
 #include "list.h"
 
 #define num_sample 500

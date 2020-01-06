@@ -9,7 +9,6 @@
 
 #include "cli.h"
 #include "setup.h"
-#include "stub.h"
 #include "list.h"
 #include "dict.h"
 #include "command.h"
